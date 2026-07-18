@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon plan de réorientation pro</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-inner">
+    <div>
+      <h1>Ma réorientation pro</h1>
+      <p class="subtitle">De l'animation loisirs vers l'informatique — un plan, pas juste une envie.</p>
+    </div>
+    <div class="header-actions">
+      <button id="btn-export" class="btn btn-ghost" title="Sauvegarder tes données dans un fichier">⬇ Exporter</button>
+      <label class="btn btn-ghost" title="Recharger un fichier de sauvegarde">
+        ⬆ Importer
+        <input type="file" id="input-import" accept="application/json" hidden>
+      </label>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="tab-btn active" data-tab="dashboard">Tableau de bord</button>
+  <button class="tab-btn" data-tab="pistes">Pistes métier</button>
+  <button class="tab-btn" data-tab="candidatures">Candidatures</button>
+  <button class="tab-btn" data-tab="formations">Formations</button>
+  <button class="tab-btn" data-tab="journal">Journal</button>
+</nav>
+
+<main class="container">
+
+  <!-- DASHBOARD -->
+  <section id="tab-dashboard" class="tab-panel active">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-value" id="stat-pistes">0</span>
+        <span class="stat-label">pistes explorées</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="stat-envoyees">0</span>
+        <span class="stat-label">candidatures envoyées</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="stat-entretiens">0</span>
+        <span class="stat-label">entretiens décrochés</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="stat-formations">0</span>
+        <span class="stat-label">formations en cours</span>
+      </div>
+    </div>
+
+    <div class="card why-card">
+      <h2>Pourquoi je pars</h2>
+      <p>Ras-le-bol de l'animation loisirs tout public : contraintes d'horaires, manque de reconnaissance…
+      Cap sur l'informatique, avec la communication et l'administratif comme portes d'entrée possibles.</p>
+    </div>
+
+    <div class="card">
+      <h2>Prochaines actions</h2>
+      <ul id="dashboard-actions" class="action-list"></ul>
+      <form id="form-action" class="inline-form">
+        <input type="text" id="input-action" placeholder="Ex : Contacter le CIO pour un bilan de compétences" required>
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- PISTES METIER -->
+  <section id="tab-pistes" class="tab-panel">
+    <p class="section-intro">Note chaque métier par intérêt (⭐) et ajoute tes remarques. Trié par domaine, comme dans tes notes de départ.</p>
+    <div id="pistes-container" class="pistes-grid"></div>
+  </section>
+
+  <!-- CANDIDATURES -->
+  <section id="tab-candidatures" class="tab-panel">
+    <p class="section-intro">Toutes tes candidatures au même endroit, avec leur statut.</p>
+    <div class="table-wrap">
+      <table id="table-candidatures">
+        <thead>
+          <tr>
+            <th>Entreprise / Poste</th>
+            <th>Domaine</th>
+            <th>Date</th>
+            <th>Statut</th>
+            <th>Notes</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="candidatures-body"></tbody>
+      </table>
+    </div>
+    <button id="btn-add-candidature" class="btn btn-primary">+ Nouvelle candidature</button>
+  </section>
+
+  <!-- FORMATIONS -->
+  <section id="tab-formations" class="tab-panel">
+    <p class="section-intro">Pistes de formation / certification pour appuyer ta reconversion (CPF, POEC, AFPA, autoformation…).</p>
+    <div id="formations-container" class="formations-list"></div>
+    <button id="btn-add-formation" class="btn btn-primary">+ Ajouter une formation</button>
+  </section>
+
+  <!-- JOURNAL -->
+  <section id="tab-journal" class="tab-panel">
+    <p class="section-intro">Un endroit pour poser tes réflexions, doutes, victoires. Relis-le les jours difficiles.</p>
+    <form id="form-journal" class="journal-form">
+      <textarea id="input-journal" rows="4" placeholder="Qu'est-ce qui s'est passé aujourd'hui dans ta réorientation ?" required></textarea>
+      <button type="submit" class="btn btn-primary">Enregistrer l'entrée</button>
+    </form>
+    <div id="journal-list" class="journal-list"></div>
+  </section>
+
+</main>
+
+<footer class="app-footer">
+  <p>Tes données restent dans ton navigateur (localStorage). Pense à exporter régulièrement pour ne rien perdre.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
