@@ -13,29 +13,236 @@
     {
       domain: "Informatique / Réparation / Support",
       jobs: [
-        "Technicien informatique / support utilisateurs",
-        "Technicien d'assistance technique et logicielle",
-        "Gestionnaire de parc informatique",
-        "Technicien territorial spécialité systèmes d'information",
-        "Administrateur systèmes et réseaux (junior)",
-        "Référent informatique d'établissement (écoles, mairies, hôpitaux)",
+        {
+          name: "Technicien informatique / support utilisateurs",
+          description: "Diagnostique et résout les problèmes matériels et logiciels des utilisateurs, au téléphone, à distance ou sur site. Installe, configure et maintient postes, imprimantes et logiciels.",
+          competences: [
+            "Diagnostic de pannes matérielles et logicielles",
+            "Connaissance des systèmes Windows/Linux/Mac et des réseaux de base",
+            "Utilisation d'un outil de ticketing (GLPI, ServiceNow...)",
+            "Configuration de postes, périphériques et logiciels",
+            "Bases de la sécurité informatique (mots de passe, sauvegardes, antivirus)",
+          ],
+          attitudes: [
+            "Patience et pédagogie face à des utilisateurs non-techniques",
+            "Sang-froid sous pression (urgences, pannes bloquantes)",
+            "Sens du service et de l'écoute",
+            "Rigueur dans le suivi des tickets et la documentation",
+          ],
+        },
+        {
+          name: "Technicien d'assistance technique et logicielle",
+          description: "Apporte un support de niveau 2/3 sur des logiciels métiers ou une infrastructure, souvent à distance (hotline), en approfondissant les diagnostics que le support niveau 1 n'a pas résolus.",
+          competences: [
+            "Analyse de logs et de comportements applicatifs",
+            "Connaissance approfondie d'un ou plusieurs logiciels métiers",
+            "Requêtes SQL de base pour investiguer les données",
+            "Rédaction de procédures et de fiches de résolution",
+            "Communication claire à l'écrit comme à l'oral",
+          ],
+          attitudes: [
+            "Curiosité et goût de creuser un problème jusqu'au bout",
+            "Autonomie dans la recherche de solutions",
+            "Capacité à vulgariser des sujets techniques",
+            "Gestion des priorités quand plusieurs demandes arrivent en même temps",
+          ],
+        },
+        {
+          name: "Gestionnaire de parc informatique",
+          description: "Recense, suit et renouvelle l'ensemble du matériel informatique (postes, licences, périphériques) d'une structure, et gère le cycle de vie des équipements.",
+          competences: [
+            "Inventaire et suivi via un outil de gestion de parc",
+            "Connaissance des contrats, licences et garanties",
+            "Organisation logistique (réception, déploiement, retrait de matériel)",
+            "Tableurs et bases de données pour le suivi",
+            "Veille sur le matériel et les coûts",
+          ],
+          attitudes: [
+            "Grande rigueur et sens de l'organisation",
+            "Anticipation (renouveler avant la panne)",
+            "Capacité à négocier avec des fournisseurs",
+            "Fiabilité dans le suivi administratif du matériel",
+          ],
+        },
+        {
+          name: "Technicien territorial spécialité systèmes d'information",
+          description: "Poste de la fonction publique territoriale : assure le support, l'exploitation et parfois le déploiement des systèmes d'information d'une collectivité (mairie, intercommunalité...).",
+          competences: [
+            "Support utilisateurs et maintenance de parc",
+            "Notions de réseaux, serveurs et sauvegardes",
+            "Connaissance des logiciels métiers des collectivités",
+            "Suivi de projets informatiques simples",
+            "Respect des procédures administratives publiques",
+          ],
+          attitudes: [
+            "Sens du service public",
+            "Discrétion et respect de la confidentialité des données",
+            "Adaptabilité face à des utilisateurs très divers (élus, agents, administrés)",
+            "Esprit d'équipe dans un environnement souvent en sous-effectif",
+          ],
+        },
+        {
+          name: "Administrateur systèmes et réseaux (junior)",
+          description: "Installe, configure et supervise serveurs, réseaux et infrastructures (souvent en appui d'un administrateur confirmé), et veille à la disponibilité et à la sécurité des systèmes.",
+          competences: [
+            "Administration Windows Server / Linux",
+            "Notions de réseaux (TCP/IP, DNS, DHCP, VPN)",
+            "Virtualisation (VMware, Hyper-V...)",
+            "Scripts d'automatisation (PowerShell, Bash)",
+            "Sauvegardes, supervision et bonnes pratiques de sécurité",
+          ],
+          attitudes: [
+            "Rigueur et méthode (une erreur peut impacter tout le monde)",
+            "Capacité à rester calme en cas d'incident",
+            "Envie d'apprendre en continu (technologies qui évoluent vite)",
+            "Sens des responsabilités sur des systèmes critiques",
+          ],
+        },
+        {
+          name: "Référent informatique d'établissement (écoles, mairies, hôpitaux)",
+          description: "Point de contact informatique unique au sein d'une structure : maintient le matériel et les logiciels en état de marche, forme les usagers et fait le lien avec les prestataires externes.",
+          competences: [
+            "Polyvalence technique (matériel, logiciels, réseau de base)",
+            "Gestion de petits projets (renouvellement de salle informatique, déploiement d'outils)",
+            "Pédagogie pour former des non-techniciens",
+            "Coordination avec des prestataires ou services informatiques externes",
+          ],
+          attitudes: [
+            "Autonomie (souvent seul sur le poste)",
+            "Sens du contact avec des publics variés (enseignants, agents, soignants...)",
+            "Débrouillardise",
+            "Capacité à faire preuve de pédagogie sans jargon",
+          ],
+        },
       ],
     },
     {
       domain: "Communication",
       jobs: [
-        "Community manager de collectivité",
-        "Chargé de communication junior",
-        "Chargé de communication numérique / webmaster",
-        "Assistant communication",
-        "Rédacteur territorial (poste généraliste incluant souvent de la com)",
+        {
+          name: "Community manager de collectivité",
+          description: "Anime les réseaux sociaux et la communication numérique d'une collectivité : conçoit des contenus, interagit avec les administrés et valorise les actions publiques.",
+          competences: [
+            "Rédaction et création de contenus (texte, visuel, vidéo courte)",
+            "Maîtrise des réseaux sociaux et de leurs codes",
+            "Outils de planification et de modération",
+            "Bases de la charte graphique et de l'identité visuelle",
+            "Analyse de statistiques d'engagement",
+          ],
+          attitudes: [
+            "Créativité et sens de l'actualité",
+            "Réactivité (répondre vite aux commentaires, gérer les situations sensibles)",
+            "Diplomatie face aux critiques ou polémiques",
+            "Curiosité pour les nouveaux formats et usages numériques",
+          ],
+        },
+        {
+          name: "Chargé de communication junior",
+          description: "Participe à la conception et à la diffusion de la communication d'une structure : supports print et digitaux, relations presse, événements internes ou publics.",
+          competences: [
+            "Rédaction adaptée à différents supports",
+            "Bases de mise en page et d'outils de création (Canva, suite Adobe...)",
+            "Coordination de prestataires (imprimeurs, graphistes)",
+            "Organisation d'événements ou d'actions de communication",
+            "Suivi de planning et de budget de communication",
+          ],
+          attitudes: [
+            "Sens de l'esthétique et souci du détail",
+            "Capacité à travailler avec plusieurs services en même temps",
+            "Créativité et force de proposition",
+            "Fiabilité sur les délais (une campagne ne peut pas être en retard)",
+          ],
+        },
+        {
+          name: "Chargé de communication numérique / webmaster",
+          description: "Gère le site internet et les supports numériques d'une structure : mise à jour de contenu, référencement, ergonomie et parfois développement de pages simples.",
+          competences: [
+            "Utilisation d'un CMS (WordPress ou équivalent)",
+            "Notions de HTML/CSS pour ajuster des pages",
+            "Bases de référencement (SEO)",
+            "Suivi d'audience (Google Analytics ou équivalent)",
+            "Retouche d'images et optimisation de contenus web",
+          ],
+          attitudes: [
+            "Logique et rigueur, utiles en informatique comme en communication",
+            "Veille active sur les usages numériques",
+            "Autonomie pour gérer un site au quotidien",
+            "Sens du détail (une faute ou un lien cassé se voit vite)",
+          ],
+        },
+        {
+          name: "Assistant communication",
+          description: "Assiste le service communication dans ses tâches quotidiennes : mise en forme de documents, mise à jour de supports, aide à l'organisation d'événements et suivi administratif.",
+          competences: [
+            "Bonne maîtrise des outils bureautiques et de mise en page",
+            "Rédaction simple et sans fautes",
+            "Organisation et gestion de plannings",
+            "Bases des outils numériques (réseaux sociaux, newsletters)",
+            "Sens du classement et de l'archivage des supports",
+          ],
+          attitudes: [
+            "Sens de l'initiative dans les tâches confiées",
+            "Fiabilité et ponctualité",
+            "Esprit d'équipe et capacité à recevoir des consignes précises",
+            "Envie d'apprendre les métiers de la communication",
+          ],
+        },
+        {
+          name: "Rédacteur territorial (poste généraliste incluant souvent de la com)",
+          description: "Poste de catégorie B de la fonction publique territoriale, aux missions variées selon le service : accueil, gestion administrative, communication, urbanisme... avec souvent une dimension rédactionnelle.",
+          competences: [
+            "Rédaction administrative claire et structurée",
+            "Bonne culture générale et connaissance du fonctionnement des collectivités",
+            "Utilisation des outils bureautiques",
+            "Capacité à s'adapter à des missions variées selon les affectations",
+            "Bases de la communication institutionnelle",
+          ],
+          attitudes: [
+            "Polyvalence et adaptabilité",
+            "Sens du service public et neutralité",
+            "Rigueur administrative",
+            "Capacité à évoluer vers des missions différentes au fil de la carrière",
+          ],
+        },
       ],
     },
     {
       domain: "Administratif (porte d'entrée facile, mobilité possible ensuite)",
       jobs: [
-        "Adjoint administratif territorial",
-        "Gestionnaire administratif",
+        {
+          name: "Adjoint administratif territorial",
+          description: "Assure l'accueil, le secrétariat et le suivi administratif d'un service public : courrier, dossiers, accueil du public, saisie et classement de documents.",
+          competences: [
+            "Maîtrise des outils bureautiques (traitement de texte, tableur)",
+            "Accueil physique et téléphonique",
+            "Rédaction de courriers administratifs simples",
+            "Classement et gestion documentaire",
+            "Utilisation de logiciels métiers de gestion administrative",
+          ],
+          attitudes: [
+            "Sens de l'accueil et amabilité",
+            "Discrétion et respect de la confidentialité",
+            "Rigueur et sens de l'organisation",
+            "Calme face à un public parfois exigeant ou en difficulté",
+          ],
+        },
+        {
+          name: "Gestionnaire administratif",
+          description: "Suit des dossiers administratifs de bout en bout : constitution, vérification, mise à jour et archivage, en lien avec différents services ou usagers.",
+          competences: [
+            "Suivi rigoureux de dossiers et d'échéances",
+            "Maîtrise des outils bureautiques et de bases de données",
+            "Rédaction de comptes rendus et de courriers",
+            "Compréhension des procédures administratives et réglementaires",
+            "Utilisation de tableurs pour le reporting",
+          ],
+          attitudes: [
+            "Rigueur et fiabilité (les erreurs sur un dossier ont des conséquences)",
+            "Capacité à gérer plusieurs dossiers en parallèle",
+            "Sens des priorités et des échéances",
+            "Bonne communication avec les différents interlocuteurs",
+          ],
+        },
       ],
     },
   ];
@@ -78,7 +285,7 @@
   // ---------- State ----------
   let pistes = load(STORAGE_KEYS.pistes, DEFAULT_PISTES.map(d => ({
     domain: d.domain,
-    jobs: d.jobs.map(name => ({ id: uid(), name, rating: 0, note: "" })),
+    jobs: d.jobs.map(job => ({ id: uid(), rating: 0, note: "", ...job })),
   })));
   let candidatures = load(STORAGE_KEYS.candidatures, []);
   let formations = load(STORAGE_KEYS.formations, DEFAULT_FORMATIONS.map(f => ({ id: uid(), ...f })));
@@ -181,6 +388,47 @@
         name.className = "piste-name";
         name.textContent = job.name;
         item.appendChild(name);
+
+        if (job.description) {
+          const desc = document.createElement("p");
+          desc.className = "piste-description";
+          desc.textContent = job.description;
+          item.appendChild(desc);
+        }
+
+        if (job.competences && job.competences.length) {
+          const compBlock = document.createElement("div");
+          compBlock.className = "piste-block piste-competences";
+          const compTitle = document.createElement("span");
+          compTitle.className = "piste-block-title";
+          compTitle.textContent = "Compétences à avoir";
+          compBlock.appendChild(compTitle);
+          const compList = document.createElement("ul");
+          job.competences.forEach(c => {
+            const li = document.createElement("li");
+            li.textContent = c;
+            compList.appendChild(li);
+          });
+          compBlock.appendChild(compList);
+          item.appendChild(compBlock);
+        }
+
+        if (job.attitudes && job.attitudes.length) {
+          const attBlock = document.createElement("div");
+          attBlock.className = "piste-block piste-attitudes";
+          const attTitle = document.createElement("span");
+          attTitle.className = "piste-block-title";
+          attTitle.textContent = "Attitudes attendues";
+          attBlock.appendChild(attTitle);
+          const attList = document.createElement("ul");
+          job.attitudes.forEach(a => {
+            const li = document.createElement("li");
+            li.textContent = a;
+            attList.appendChild(li);
+          });
+          attBlock.appendChild(attList);
+          item.appendChild(attBlock);
+        }
 
         const stars = document.createElement("div");
         stars.className = "stars";
