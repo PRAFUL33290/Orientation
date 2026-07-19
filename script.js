@@ -7,6 +7,7 @@
     formations: "orientation_formations",
     journal: "orientation_journal",
     actions: "orientation_actions",
+    skills: "orientation_skills",
   };
 
   const DEFAULT_PISTES = [
@@ -294,12 +295,46 @@
     { id: uid(), text: "Faire le point sur les métiers qui m'intéressent le plus", done: false },
   ]);
 
+  // ---------- Compétences ----------
+  // status: "inconnu" (pas encore évalué) | "sais" (je sais faire) | "sais-pas" (je ne sais pas encore)
+  function collectSkillsFromPistes() {
+    const map = new Map();
+    pistes.forEach(domainGroup => {
+      domainGroup.jobs.forEach(job => {
+        (job.competences || []).forEach(c => {
+          if (!map.has(c)) map.set(c, new Set());
+          map.get(c).add(job.name);
+        });
+      });
+    });
+    return map;
+  }
+
+  let skills = load(STORAGE_KEYS.skills, null);
+  (function initSkills() {
+    const fromPistes = collectSkillsFromPistes();
+    if (!skills) {
+      skills = [];
+    }
+    // Garder trace des métiers liés + ajouter les nouvelles compétences trouvées dans les pistes
+    fromPistes.forEach((jobsSet, name) => {
+      let existing = skills.find(s => s.name === name);
+      if (!existing) {
+        existing = { id: uid(), name, status: "inconnu", notes: "", custom: false, jobs: [] };
+        skills.push(existing);
+      }
+      existing.custom = false;
+      existing.jobs = Array.from(jobsSet);
+    });
+  })();
+
   function persistAll() {
     save(STORAGE_KEYS.pistes, pistes);
     save(STORAGE_KEYS.candidatures, candidatures);
     save(STORAGE_KEYS.formations, formations);
     save(STORAGE_KEYS.journal, journal);
     save(STORAGE_KEYS.actions, actions);
+    save(STORAGE_KEYS.skills, skills);
   }
 
   // ---------- Tabs ----------
@@ -319,11 +354,15 @@
     const envoyees = candidatures.filter(c => c.status && c.status !== "À envoyer").length;
     const entretiens = candidatures.filter(c => c.status === "Entretien" || c.status === "Offre reçue").length;
     const formationsEnCours = formations.filter(f => f.status === "en-cours").length;
+    const competencesSais = skills.filter(s => s.status === "sais").length;
+    const competencesAApprendre = skills.filter(s => s.status === "sais-pas").length;
 
     document.getElementById("stat-pistes").textContent = totalPistes;
     document.getElementById("stat-envoyees").textContent = envoyees;
     document.getElementById("stat-entretiens").textContent = entretiens;
     document.getElementById("stat-formations").textContent = formationsEnCours;
+    document.getElementById("stat-competences-sais").textContent = competencesSais;
+    document.getElementById("stat-competences-a-apprendre").textContent = competencesAApprendre;
 
     const list = document.getElementById("dashboard-actions");
     list.innerHTML = "";
@@ -464,6 +503,153 @@
       container.appendChild(domainEl);
     });
   }
+
+  // ---------- Compétences (tutoriel / apprentissage) ----------
+  const STATUS_LABELS = { inconnu: "Non évaluée", sais: "Je sais faire", "sais-pas": "Je ne sais pas encore" };
+  let skillFilter = "tous";
+
+  function learningLinks(skillName) {
+    const q = encodeURIComponent(skillName);
+    return [
+      { label: "▶ Tutoriels YouTube", url: `https://www.youtube.com/results?search_query=${q}+tutoriel+débutant` },
+      { label: "🎓 Cours OpenClassrooms", url: `https://openclassrooms.com/fr/search?query=${q}` },
+      { label: "🔍 Chercher une formation", url: `https://www.google.com/search?q=formation+${q}` },
+    ];
+  }
+
+  function renderCompetences() {
+    document.getElementById("count-tous").textContent = skills.length;
+    document.getElementById("count-sais-pas").textContent = skills.filter(s => s.status === "sais-pas").length;
+    document.getElementById("count-sais").textContent = skills.filter(s => s.status === "sais").length;
+    document.getElementById("count-inconnu").textContent = skills.filter(s => s.status === "inconnu").length;
+
+    document.querySelectorAll("#competences-filters .filter-btn").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.filter === skillFilter);
+    });
+
+    const container = document.getElementById("competences-container");
+    container.innerHTML = "";
+
+    const visible = skills.filter(s => skillFilter === "tous" || s.status === skillFilter);
+    if (visible.length === 0) {
+      container.innerHTML = '<p class="empty-hint">Aucune compétence dans cette catégorie.</p>';
+      return;
+    }
+
+    visible.forEach(skill => {
+      const card = document.createElement("div");
+      card.className = "skill-card status-" + skill.status;
+
+      const head = document.createElement("div");
+      head.className = "skill-head";
+
+      const name = document.createElement("div");
+      name.className = "skill-name";
+      name.textContent = skill.name;
+      head.appendChild(name);
+
+      if (skill.custom) {
+        const del = document.createElement("button");
+        del.className = "btn-icon";
+        del.title = "Supprimer";
+        del.textContent = "✕";
+        del.addEventListener("click", () => {
+          skills = skills.filter(s => s.id !== skill.id);
+          persistAll();
+          renderCompetences();
+          renderDashboard();
+        });
+        head.appendChild(del);
+      }
+      card.appendChild(head);
+
+      if (skill.jobs && skill.jobs.length) {
+        const jobs = document.createElement("p");
+        jobs.className = "skill-jobs";
+        jobs.textContent = "Utile pour : " + skill.jobs.join(", ");
+        card.appendChild(jobs);
+      }
+
+      const choices = document.createElement("div");
+      choices.className = "skill-choices";
+      [
+        { value: "sais", label: "✓ Je sais faire" },
+        { value: "sais-pas", label: "✕ Je ne sais pas encore" },
+      ].forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "skill-choice-btn" + (skill.status === opt.value ? " active" : "");
+        btn.textContent = opt.label;
+        btn.addEventListener("click", () => {
+          skill.status = skill.status === opt.value ? "inconnu" : opt.value;
+          persistAll();
+          renderCompetences();
+          renderDashboard();
+        });
+        choices.appendChild(btn);
+      });
+      card.appendChild(choices);
+
+      if (skill.status === "sais-pas") {
+        const learn = document.createElement("div");
+        learn.className = "skill-learn";
+
+        const title = document.createElement("span");
+        title.className = "piste-block-title";
+        title.textContent = "Pour apprendre";
+        learn.appendChild(title);
+
+        const linksWrap = document.createElement("div");
+        linksWrap.className = "skill-links";
+        learningLinks(skill.name).forEach(link => {
+          const a = document.createElement("a");
+          a.href = link.url;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.className = "skill-link";
+          a.textContent = link.label;
+          linksWrap.appendChild(a);
+        });
+        learn.appendChild(linksWrap);
+
+        const notes = document.createElement("textarea");
+        notes.className = "skill-notes";
+        notes.placeholder = "Notes de tuto : ce que tu as appris, la vidéo suivie, ce qui reste à pratiquer...";
+        notes.value = skill.notes;
+        notes.addEventListener("input", () => {
+          skill.notes = notes.value;
+          persistAll();
+        });
+        learn.appendChild(notes);
+
+        card.appendChild(learn);
+      }
+
+      container.appendChild(card);
+    });
+  }
+
+  document.getElementById("competences-filters").addEventListener("click", e => {
+    const btn = e.target.closest(".filter-btn");
+    if (!btn) return;
+    skillFilter = btn.dataset.filter;
+    renderCompetences();
+  });
+
+  document.getElementById("form-skill").addEventListener("submit", e => {
+    e.preventDefault();
+    const input = document.getElementById("input-skill");
+    const name = input.value.trim();
+    if (!name) return;
+    if (skills.some(s => s.name.toLowerCase() === name.toLowerCase())) {
+      input.value = "";
+      return;
+    }
+    skills.push({ id: uid(), name, status: "inconnu", notes: "", custom: true, jobs: [] });
+    input.value = "";
+    persistAll();
+    renderCompetences();
+    renderDashboard();
+  });
 
   // ---------- Candidatures ----------
   function renderCandidatures() {
@@ -607,7 +793,7 @@
 
   // ---------- Export / Import ----------
   document.getElementById("btn-export").addEventListener("click", () => {
-    const data = { pistes, candidatures, formations, journal, actions, exportedAt: new Date().toISOString() };
+    const data = { pistes, candidatures, formations, journal, actions, skills, exportedAt: new Date().toISOString() };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -629,6 +815,7 @@
         formations = data.formations || formations;
         journal = data.journal || journal;
         actions = data.actions || actions;
+        skills = data.skills || skills;
         persistAll();
         renderAll();
       } catch (err) {
@@ -653,6 +840,7 @@
   function renderAll() {
     renderDashboard();
     renderPistes();
+    renderCompetences();
     renderCandidatures();
     renderFormations();
     renderJournal();

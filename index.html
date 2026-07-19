@@ -27,6 +27,7 @@
 <nav class="tabs" id="tabs">
   <button class="tab-btn active" data-tab="dashboard">Tableau de bord</button>
   <button class="tab-btn" data-tab="pistes">Pistes métier</button>
+  <button class="tab-btn" data-tab="competences">Compétences</button>
   <button class="tab-btn" data-tab="candidatures">Candidatures</button>
   <button class="tab-btn" data-tab="formations">Formations</button>
   <button class="tab-btn" data-tab="journal">Journal</button>
@@ -53,6 +54,14 @@
         <span class="stat-value" id="stat-formations">0</span>
         <span class="stat-label">formations en cours</span>
       </div>
+      <div class="stat-card">
+        <span class="stat-value" id="stat-competences-sais">0</span>
+        <span class="stat-label">compétences acquises</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="stat-competences-a-apprendre">0</span>
+        <span class="stat-label">compétences à apprendre</span>
+      </div>
     </div>
 
     <div class="card why-card">
@@ -75,6 +84,26 @@
   <section id="tab-pistes" class="tab-panel">
     <p class="section-intro">Note chaque métier par intérêt (⭐) et ajoute tes remarques. Trié par domaine, comme dans tes notes de départ.</p>
     <div id="pistes-container" class="pistes-grid"></div>
+  </section>
+
+  <!-- COMPETENCES -->
+  <section id="tab-competences" class="tab-panel">
+    <p class="section-intro">Toutes les compétences relevées dans tes pistes métier. Pour chacune, dis si tu sais déjà faire ou pas — si tu ne sais pas, tu as directement des pistes pour apprendre (vidéos YouTube, formations, tutoriel) et un espace pour noter ta progression.</p>
+
+    <div class="card competences-toolbar">
+      <div class="competences-filters" id="competences-filters">
+        <button class="filter-btn active" data-filter="tous">Toutes (<span id="count-tous">0</span>)</button>
+        <button class="filter-btn" data-filter="sais-pas">À apprendre (<span id="count-sais-pas">0</span>)</button>
+        <button class="filter-btn" data-filter="sais">Acquises (<span id="count-sais">0</span>)</button>
+        <button class="filter-btn" data-filter="inconnu">Non évaluées (<span id="count-inconnu">0</span>)</button>
+      </div>
+      <form id="form-skill" class="inline-form">
+        <input type="text" id="input-skill" placeholder="Ajouter une compétence à suivre">
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+      </form>
+    </div>
+
+    <div id="competences-container" class="competences-list"></div>
   </section>
 
   <!-- CANDIDATURES -->
